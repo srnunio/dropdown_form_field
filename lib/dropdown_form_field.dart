@@ -48,11 +48,15 @@ class _Builder extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: InputDecorator(
-        decoration: decoration ?? InputDecoration(),
+        decoration: decoration ??
+            InputDecoration(
+              filled: true,
+            ),
         child: DropdownButtonHideUnderline(
           child: DropdownButton<dynamic>(
             isExpanded: true,
-            hint: hintTitle,
+            elevation: 4,
+            hint: Container(alignment: Alignment.centerLeft, child: hintTitle),
             value: selectedValue,
             onChanged: _onChanged,
             selectedItemBuilder: (context) {
