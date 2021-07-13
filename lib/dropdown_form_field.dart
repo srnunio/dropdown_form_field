@@ -39,7 +39,9 @@ class _Builder extends StatelessWidget {
     return items
         .map((item) => DropdownMenuItem<dynamic>(
               value: item,
-              child: builderItem(context, item),
+              child: Container(
+                  alignment: Alignment.centerLeft,
+                  child: builderItem(context, item)),
             ))
         .toList();
   }
@@ -61,7 +63,9 @@ class _Builder extends StatelessWidget {
             onChanged: _onChanged,
             selectedItemBuilder: (context) {
               return items
-                  .map<Widget>((item) => builderItem(context, item))
+                  .map<Widget>((item) => Container(
+                      alignment: Alignment.centerLeft,
+                      child: builderSelectedItem(context, item)))
                   .toList();
             },
             items: _items(context),
