@@ -19,14 +19,11 @@ class _Builder extends StatelessWidget {
 
   final Widget hintTitle;
 
-  final bool enabled;
-
   _Builder(
       {required this.state,
       required this.items,
       required this.decoration,
       required this.hintTitle,
-      this.enabled = true,
       required this.selectedValue,
       required this.builderItem,
       required this.builderSelectedItem,
@@ -73,7 +70,7 @@ class _Builder extends StatelessWidget {
 
 /// Creates a [DropdownFormField]
 class DropdownFormField extends FormField<dynamic> {
-  /// Values that [builderItem] or [builderSelectedItem] will use to assemble the preview of the items.
+  /// Values that [itemBuilder] or [selectedItemBuilder] will use to assemble the preview of the items.
   final List<dynamic> items;
 
   /// Represents the selected item
@@ -81,14 +78,14 @@ class DropdownFormField extends FormField<dynamic> {
 
   /// Called to build children for the list with
   /// 0 <= items < items.length.
-  final Widget Function(BuildContext, dynamic) builderItem;
+  final Widget Function(BuildContext, dynamic) itemBuilder;
 
   // Called to build children selected for the list with
   /// 0 <= items < items.length.
-  final Widget Function(BuildContext, dynamic) builderSelectedItem;
+  final Widget Function(BuildContext, dynamic) selectedItemBuilder;
 
   /// Called when no item is selected [selectedValue]
-  final Widget hintTitle;
+  final Widget hintBuilder;
 
   /// Triggered when any [DropDownMenuItem] items are selected
   final Function(dynamic)? onChanged;
@@ -104,9 +101,9 @@ class DropdownFormField extends FormField<dynamic> {
       this.selectedValue,
       this.decoration,
       this.enabled = true,
-      required this.hintTitle,
-      required this.builderItem,
-      required this.builderSelectedItem,
+      required this.hintBuilder,
+      required this.itemBuilder,
+      required this.selectedItemBuilder,
       this.onChanged})
       : super(
             initialValue: selectedValue,
@@ -114,10 +111,10 @@ class DropdownFormField extends FormField<dynamic> {
             builder: (state) => _Builder(
                 state: state,
                 items: items,
-                hintTitle: hintTitle,
+                hintTitle: hintBuilder,
                 decoration: decoration,
                 selectedValue: selectedValue,
-                builderItem: builderItem,
-                builderSelectedItem: builderSelectedItem,
+                builderItem: itemBuilder,
+                builderSelectedItem: selectedItemBuilder,
                 onChanged: onChanged));
 }
