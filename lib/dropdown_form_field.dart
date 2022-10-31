@@ -19,15 +19,22 @@ class _Builder extends StatelessWidget {
 
   final Widget hintTitle;
 
+  final Color? iconDisabledColor;
+  final Color? iconEnabledColor;
+  final Color? dropdownColor;
+
   _Builder(
       {required this.state,
-      required this.items,
-      required this.decoration,
-      required this.hintTitle,
-      required this.selectedValue,
-      required this.builderItem,
-      required this.builderSelectedItem,
-      required this.onChanged});
+        required this.items,
+        required this.decoration,
+        required this.hintTitle,
+        required this.selectedValue,
+        required this.builderItem,
+        required this.builderSelectedItem,
+        required this.iconDisabledColor,
+        required this.iconEnabledColor,
+        required this.dropdownColor,
+        required this.onChanged});
 
   _onChanged(dynamic newValue) {
     state.didChange(newValue);
@@ -38,11 +45,11 @@ class _Builder extends StatelessWidget {
   List<DropdownMenuItem> _items(BuildContext context) {
     return items
         .map((item) => DropdownMenuItem<dynamic>(
-              value: item,
-              child: Container(
-                  alignment: Alignment.centerLeft,
-                  child: builderItem(context, item)),
-            ))
+      value: item,
+      child: Container(
+          alignment: Alignment.centerLeft,
+          child: builderItem(context, item)),
+    ))
         .toList();
   }
 
@@ -58,14 +65,17 @@ class _Builder extends StatelessWidget {
           child: DropdownButton<dynamic>(
             isExpanded: true,
             elevation: 4,
+            iconDisabledColor: iconDisabledColor,
+            iconEnabledColor: iconEnabledColor,
+            dropdownColor: dropdownColor,
             hint: Container(alignment: Alignment.centerLeft, child: hintTitle),
             value: selectedValue,
             onChanged: _onChanged,
             selectedItemBuilder: (context) {
               return items
                   .map<Widget>((item) => Container(
-                      alignment: Alignment.centerLeft,
-                      child: builderSelectedItem(context, item)))
+                  alignment: Alignment.centerLeft,
+                  child: builderSelectedItem(context, item)))
                   .toList();
             },
             items: _items(context),
@@ -104,25 +114,36 @@ class DropdownFormField extends FormField<dynamic> {
   /// Used to block external click events [enabled]
   final bool enabled;
 
+  final Color? iconDisabledColor;
+  final Color? iconEnabledColor;
+  final Color? dropdownColor;
+
   DropdownFormField(
       {required this.items,
-      this.selectedValue,
-      this.decoration,
-      this.enabled = true,
-      required this.hintBuilder,
-      required this.itemBuilder,
-      required this.selectedItemBuilder,
-      this.onChanged})
+        this.selectedValue,
+        this.decoration,
+        this.iconDisabledColor,
+        this.iconEnabledColor,
+        this.dropdownColor,
+        this.enabled = true,
+        required this.hintBuilder,
+        required this.itemBuilder,
+        required this.selectedItemBuilder,
+        this.onChanged})
       : super(
-            initialValue: selectedValue,
-            enabled: enabled,
-            builder: (state) => _Builder(
-                state: state,
-                items: items,
-                hintTitle: hintBuilder,
-                decoration: decoration,
-                selectedValue: selectedValue,
-                builderItem: itemBuilder,
-                builderSelectedItem: selectedItemBuilder,
-                onChanged: onChanged));
+      initialValue: selectedValue,
+      enabled: enabled,
+      builder: (state) => _Builder(
+        state: state,
+        items: items,
+        hintTitle: hintBuilder,
+        decoration: decoration,
+        selectedValue: selectedValue,
+        builderItem: itemBuilder,
+        builderSelectedItem: selectedItemBuilder,
+        onChanged: onChanged,
+        iconDisabledColor: iconDisabledColor,
+        iconEnabledColor: iconEnabledColor,
+        dropdownColor: dropdownColor,
+      ));
 }
