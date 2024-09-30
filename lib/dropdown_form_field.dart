@@ -21,6 +21,8 @@ class _Builder extends StatelessWidget {
 
   final Widget hintTitle;
 
+  final FocusNode? focusNode;
+
   final Color? iconDisabledColor;
   final Color? iconEnabledColor;
   final Color? dropdownColor;
@@ -38,6 +40,7 @@ class _Builder extends StatelessWidget {
     required this.dropdownColor,
     required this.onChanged,
     required this.onTap,
+    required this.focusNode,
   });
 
   _onChanged(dynamic newValue) {
@@ -68,6 +71,7 @@ class _Builder extends StatelessWidget {
             ),
         child: DropdownButtonHideUnderline(
           child: DropdownButton<dynamic>(
+            focusNode: focusNode,
             isExpanded: true,
             elevation: 4,
             iconDisabledColor: iconDisabledColor,
@@ -126,6 +130,8 @@ class DropdownFormField extends FormField<dynamic> {
   final Color? iconEnabledColor;
   final Color? dropdownColor;
 
+  final FocusNode? focusNode;
+
   DropdownFormField({
     required this.items,
     this.selectedValue,
@@ -139,12 +145,14 @@ class DropdownFormField extends FormField<dynamic> {
     required this.selectedItemBuilder,
     this.onChanged,
     this.onTap,
+    this.focusNode,
   }) : super(
             initialValue: selectedValue,
             enabled: enabled,
             builder: (state) => _Builder(
                   state: state,
                   items: items,
+                  focusNode: focusNode,
                   hintTitle: hintBuilder,
                   decoration: decoration,
                   selectedValue: selectedValue,
