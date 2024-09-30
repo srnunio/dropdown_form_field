@@ -26,6 +26,7 @@ class _Builder extends StatelessWidget {
   final Color? iconDisabledColor;
   final Color? iconEnabledColor;
   final Color? dropdownColor;
+  final double? itemHeight;
 
   _Builder({
     required this.state,
@@ -41,6 +42,7 @@ class _Builder extends StatelessWidget {
     required this.onChanged,
     required this.onTap,
     required this.focusNode,
+    required this.itemHeight,
   });
 
   _onChanged(dynamic newValue) {
@@ -51,13 +53,16 @@ class _Builder extends StatelessWidget {
 
   List<DropdownMenuItem> _items(BuildContext context) {
     return items
-        .map((item) => DropdownMenuItem<dynamic>(
-              value: item,
-              onTap: onTap,
-              child: Container(
-                  alignment: Alignment.centerLeft,
-                  child: builderItem(context, item)),
-            ))
+        .map(
+          (item) => DropdownMenuItem<dynamic>(
+            value: item,
+            onTap: onTap,
+            child: Container(
+              alignment: Alignment.centerLeft,
+              child: builderItem(context, item),
+            ),
+          ),
+        )
         .toList();
   }
 
@@ -73,6 +78,7 @@ class _Builder extends StatelessWidget {
           child: DropdownButton<dynamic>(
             focusNode: focusNode,
             isExpanded: true,
+            itemHeight: itemHeight,
             elevation: 4,
             iconDisabledColor: iconDisabledColor,
             iconEnabledColor: iconEnabledColor,
@@ -131,6 +137,7 @@ class DropdownFormField extends FormField<dynamic> {
   final Color? dropdownColor;
 
   final FocusNode? focusNode;
+  final double? itemHeight;
 
   DropdownFormField({
     required this.items,
@@ -146,6 +153,7 @@ class DropdownFormField extends FormField<dynamic> {
     this.onChanged,
     this.onTap,
     this.focusNode,
+    this.itemHeight,
   }) : super(
             initialValue: selectedValue,
             enabled: enabled,
@@ -163,5 +171,6 @@ class DropdownFormField extends FormField<dynamic> {
                   iconDisabledColor: iconDisabledColor,
                   iconEnabledColor: iconEnabledColor,
                   dropdownColor: dropdownColor,
+                  itemHeight: itemHeight,
                 ));
 }
